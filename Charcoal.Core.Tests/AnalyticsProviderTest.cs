@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace Charcoal.Core.Tests
 {
-    [TestFixture]
+	[TestFixture]
     public class AnalyticsProviderTest
     {
         [Test]

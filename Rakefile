@@ -3,14 +3,16 @@ require "bundler/setup"
 require 'fileutils'
 require 'albacore'
 require 'git'
-
+require 'yaml'
 
 $dir=Dir.pwd.gsub("/","\\")
-$testdb="Data Source=.\\SQLEXPRESS;AttachDbFilename=#{$dir}\\Charcoal.DataLayer.Tests\\TestDatabase.mdf;Integrated Security=True;Connect Timeout=30;User Instance=True"
-$proddb="Data Source=.\\SQLEXPRESS;AttachDbFilename=#{$dir}\\Charcoal.Web\\App_Data\\Local.mdf;Integrated Security=True;Connect Timeout=30;User Instance=True"
+config =YAML::load( File.read( "user.yaml" ) )
+$testdb= config["testconnection"]
+$proddb= config["prodconnection"]
+
 
 def ouputToConsole(str)
-puts "Operator>>>>>>>",str
+	puts "Operator>>>>>>>",str
 end
 
 def migrate(migrator, filePath, connection, task)
@@ -55,6 +57,7 @@ msbuild :build do |msb|
 	msb.properties :configuration => :Debug
 	msb.targets [ :Rebuild ]
 	msb.solution = "Charcoal.sln"
+	#ouputToConsole $testdb
 end
 
 desc "Run Tests"

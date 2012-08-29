@@ -53,8 +53,16 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="YamlDotNet.Core">
+      <HintPath>..\packages\YamlDotNet.Core.1.1.15\lib\YamlDotNet.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="YamlDotNet.RepresentationModel">
+      <HintPath>..\packages\YamlDotNet.RepresentationModel.1.1.15\lib\YamlDotNet.RepresentationModel.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config\CharcoalConfig.cs" />
+    <Compile Include="Config\ConfigReader.cs" />
     <Compile Include="Entities\BaseEntity.cs" />
     <Compile Include="Entities\Iteration.cs" />
     <Compile Include="Entities\Project.cs" />
@@ -69,6 +77,9 @@
     <Compile Include="Providers\IStoryProvider.cs" />
     <Compile Include="Providers\IterationAnalysisResult.cs" />
     <Compile Include="Providers\OverviewAnalysisResult.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
