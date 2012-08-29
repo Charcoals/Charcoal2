@@ -1,6 +1,6 @@
 using System;
 using System.Dynamic;
-using Charcoal.Common.Entities;
+using Charcoal.Core.Entities;
 using NUnit.Framework;
 using Simple.Data;
 

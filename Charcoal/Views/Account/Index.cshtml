@@ -1,0 +1,41 @@
+﻿@model Charcoal.Models.LogOnModel
+@{
+    ViewBag.Title = "Login";
+}
+<p>
+    <div class="hero-unit">
+        <h1>
+            Charcoal Login</h1>
+        <p>
+            Please login using your Charcoal Account</p>
+        <p>
+        </p>
+    </div>
+</p>
+@using (Html.BeginForm()) {
+    <fieldset>
+        <div id="logonForm" class="offset1">
+            <div class="row">
+                <div class="span4">
+                    <label>
+                        User Name:</label>
+                </div>
+                <div class="span4">
+                    @Html.TextBoxFor(model => model.UserName, new { placeholder = "your username" })
+                    @Html.ValidationMessageFor(model => model.UserName)
+                </div>
+            </div>
+            <div class="row">
+                <div class="span4">
+                    <label>
+                        Password:</label>
+                </div>
+                <div class="span4">
+                    @Html.PasswordFor(model => model.Password)
+                    @Html.ValidationMessageFor(model => model.Password)
+                </div>
+            </div>
+            @Html.ActionLink("Login", "Login", "Account", Model, new { @class = "btn" })
+        </div>
+    </fieldset>
+}

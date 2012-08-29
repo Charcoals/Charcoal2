@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Charcoal.Common.Entities;
+using Charcoal.Core.Entities;
 using Charcoal.DataLayer;
 using Moq;
 using NUnit.Framework;

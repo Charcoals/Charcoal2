@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Charcoal.Common;
-using Charcoal.Common.Entities;
-using Charcoal.Common.Providers;
+using Charcoal.Core.Entities;
 using Charcoal.DataLayer;
 
 namespace Charcoal.Core

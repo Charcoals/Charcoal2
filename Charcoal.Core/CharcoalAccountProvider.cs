@@ -1,7 +1,6 @@
 ﻿using System.Web.Security;
 using Charcoal.Common;
-using Charcoal.Common.Entities;
-using Charcoal.Common.Providers;
+using Charcoal.Core.Entities;
 
 namespace Charcoal.Core
 {

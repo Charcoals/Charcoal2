@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Charcoal.Migrations", "Char
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Charcoal.DataLayer", "Charcoal.DataLayer\Charcoal.DataLayer.csproj", "{73FE8271-3D9F-4827-80E4-330DDB2141FD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Charcoal", "Charcoal\Charcoal.csproj", "{F7C6023F-E439-48A5-92DF-FB5755AB59B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -118,6 +120,21 @@ Global
 		{73FE8271-3D9F-4827-80E4-330DDB2141FD}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{73FE8271-3D9F-4827-80E4-330DDB2141FD}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{73FE8271-3D9F-4827-80E4-330DDB2141FD}.Release|x86.ActiveCfg = Release|Any CPU
+		{F7C6023F-E439-48A5-92DF-FB5755AB59B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7C6023F-E439-48A5-92DF-FB5755AB59B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7C6023F-E439-48A5-92DF-FB5755AB59B1}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F7C6023F-E439-48A5-92DF-FB5755AB59B1}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F7C6023F-E439-48A5-92DF-FB5755AB59B1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F7C6023F-E439-48A5-92DF-FB5755AB59B1}.Mac|Any CPU.ActiveCfg = Release|Any CPU
+		{F7C6023F-E439-48A5-92DF-FB5755AB59B1}.Mac|Any CPU.Build.0 = Release|Any CPU
+		{F7C6023F-E439-48A5-92DF-FB5755AB59B1}.Mac|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F7C6023F-E439-48A5-92DF-FB5755AB59B1}.Mac|Mixed Platforms.Build.0 = Release|Any CPU
+		{F7C6023F-E439-48A5-92DF-FB5755AB59B1}.Mac|x86.ActiveCfg = Release|Any CPU
+		{F7C6023F-E439-48A5-92DF-FB5755AB59B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7C6023F-E439-48A5-92DF-FB5755AB59B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7C6023F-E439-48A5-92DF-FB5755AB59B1}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F7C6023F-E439-48A5-92DF-FB5755AB59B1}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F7C6023F-E439-48A5-92DF-FB5755AB59B1}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

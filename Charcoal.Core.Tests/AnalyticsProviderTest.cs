@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
-using Charcoal.Common.Entities;
-using Charcoal.Common.Providers;
+using Charcoal.Core.Entities;
 using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Charcoal.Common;
-using Charcoal.Common.Entities;
+using Charcoal.Core.Entities;
 using Charcoal.DataLayer;
 using Moq;
 using NUnit.Framework;

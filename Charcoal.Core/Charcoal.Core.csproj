@@ -59,9 +59,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnalyticsProvider.cs" />
     <Compile Include="CharcoalAccountProvider.cs" />
     <Compile Include="CharcoalProjectProvider.cs" />
     <Compile Include="CharcoalStoryProvider.cs" />
+    <Compile Include="Entities\BaseEntity.cs" />
+    <Compile Include="Entities\Iteration.cs" />
+    <Compile Include="Entities\Project.cs" />
+    <Compile Include="Entities\Story.cs" />
+    <Compile Include="Entities\Task.cs" />
+    <Compile Include="Entities\User.cs" />
+    <Compile Include="IAccountProvider.cs" />
+    <Compile Include="IProjectProvider.cs" />
+    <Compile Include="IStoryProvider.cs" />
+    <Compile Include="IterationAnalysisResult.cs" />
+    <Compile Include="OperationResponse.cs" />
+    <Compile Include="OverviewAnalysisResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
