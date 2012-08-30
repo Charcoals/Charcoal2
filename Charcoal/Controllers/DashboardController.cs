@@ -3,25 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Charcoal.Models;
 
 namespace Charcoal.Controllers
 {
-    public class AccountController : Controller
+    public class DashboardController : Controller
     {
         //
-        // GET: /Account/
+        // GET: /Dashboard/
 
         public ActionResult Index()
         {
             return View();
         }
-
-				public ActionResult Login(LogOnModel logOnModel) {
-
-					return RedirectToAction("Index", "Dashboard");
-					//return "in";
-				}
 
     }
 }

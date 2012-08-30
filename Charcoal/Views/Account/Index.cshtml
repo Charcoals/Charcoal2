@@ -35,6 +35,15 @@
                     @Html.ValidationMessageFor(model => model.Password)
                 </div>
             </div>
+            <div class="row">
+            <div class="span4">
+                    <label>
+                        Remember Me?</label>
+                </div>
+                <div class="span4">
+                    @Html.CheckBoxFor(model => model.RememberMe)
+                </div>
+            </div>
             @Html.ActionLink("Login", "Login", "Account", Model, new { @class = "btn" })
         </div>
     </fieldset>
