@@ -1,0 +1,9 @@
+﻿<li id="fat-menu" class="dropdown"><a href="#" id="drop3" role="button" class="dropdown-toggle"
+    data-toggle="dropdown">
+    @Html.Raw("Welcome " + @User.Identity.Name + "!")<b class="caret"></b> </a>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
+        <li>@Html.ActionLink("Account", "Profile", "Account")
+        </li>
+        <li>@Html.ActionLink("Log Off", "LogOff", "Account")</li>
+    </ul>
+</li>

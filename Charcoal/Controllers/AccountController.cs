@@ -17,11 +17,21 @@ namespace Charcoal.Controllers
             return View();
         }
 
-				public ActionResult Login(LogOnModel logOnModel) {
+        public ActionResult Login(LogOnModel logOnModel)
+        {
 
-					return RedirectToAction("Index", "Dashboard");
-					//return "in";
-				}
+            return RedirectToAction("Index", "Dashboard");
+            //return "in";
+        }
 
+        public ActionResult Profile()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ActionResult LogOff()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

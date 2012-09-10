@@ -1,0 +1,19 @@
+﻿@model Charcoal.Models.StoryViewModel
+
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span2" id="storycard">
+        <!--Sidebar content-->
+        @Model.Title
+    </div>
+    <div class="span10">
+        <!--Body content-->
+        @foreach(var task in Model.Tasks)
+        {
+            <span id="taskcard">
+            @task.Description
+            </span>
+        }
+    </div>
+  </div>
+</div>

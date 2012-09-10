@@ -1,8 +1,33 @@
 ﻿@model Charcoal.Models.DashboardViewModel
-
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Dashboard";
     Layout = "~/Views/Shared/DashboardLayout.cshtml";
 }
-
-<h2>Index</h2>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span10">
+            <div class="page-header">
+                <h1>
+                    Dashboard</h1>
+            </div>
+            <div class="row-fluid">
+                <div class="span5">
+                    <h1>
+                        <small>Projects</small></h1>
+                        @foreach(var project in Model.Projects)
+                        {
+                            Html.RenderPartial("ProjectControl", project);
+                        }
+                </div>
+                <div class="span5">
+                    <h1>
+                        <small>Recent activities</small></h1>
+                        @foreach(var activityViewModel in Model.Activities)
+                        {
+                            Html.RenderPartial("ActivityControl", activityViewModel);
+                        }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

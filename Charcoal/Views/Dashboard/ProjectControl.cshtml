@@ -1,0 +1,27 @@
+﻿@model Charcoal.Models.ProjectViewModel
+<div class="well">
+    <div class="row-fluid">
+        <div class="span9">
+            <div class="span6">
+                @Model.Title
+            </div>
+            <div class="span3">
+                @Model.Velocity
+            </div>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="span8">
+                @Model.Description
+            </div>
+            <div class="span4 btn-group">
+                <div>
+                    <a class="btn btn-mini" href="Project/Edit/@Model.Id"><i class="icon-pencil"></i>Edit</a>
+                    <a class="btn btn-mini" href="Analytics/AnalyzeProject/@Model.Id"><i class="icon-fire"></i>Analyze</a>
+                    <a class="btn btn-mini" href="Stories/CurrentTab?projectId=@Model.Id"><i class="icon-tasks"></i>Stories</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+﻿@model Charcoal.Models.StoriesCollectionViewModel
+@{
+    ViewBag.Title = "Stories";
+    Layout = "~/Views/Shared/DashboardLayout.cshtml";
+}
+<div class="page-header container-fluid">
+    <h1 class="span3">@Model.CollectionName</h1>
+    <form class="pull-right">
+        <input type="text" class="search-query" placeholder="Search">
+    </form>
+</div>
+<div class="container-fluid">
+@foreach (var story in Model.Stories)
+{
+    Html.RenderPartial("StoryRow", story);
+}
+</div>
