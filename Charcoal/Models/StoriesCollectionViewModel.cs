@@ -21,7 +21,8 @@ namespace Charcoal.Models
         public long Id { get; private set; }
         public string Title { get; private set; }
         public string Description { get; private set; }
-        public int Estimate { get; private set; }
+        public string Estimate { get; private set; }
+        public IterationType IterationType { get; private set; }
         public IEnumerable<TaskViewModel> Tasks { get; private set; }
 
         public StoryViewModel(Story story)
@@ -29,7 +30,9 @@ namespace Charcoal.Models
             Id = story.Id;
             Title = story.Title;
             Description = story.Description;
-            
+            Estimate = story.Estimate.HasValue ? story.Estimate +" pts" : "Unestimated";
+            IterationType = story.IterationType;
+
             if(story.Tasks != null)
                 Tasks = story.Tasks.Select(e => new TaskViewModel(e));
         }
@@ -41,12 +44,14 @@ namespace Charcoal.Models
         public string Description { get; private set; }
         public long Id { get; private set; }
         public int Position { get; private set; }
+        public bool IsCompleted { get; private set; }
 
         public TaskViewModel(Task task)
         {
             Id = task.Id;
             Description = task.Description;
             Position = task.Position;
+            IsCompleted = task.IsCompleted;
         }
     }
 }
