@@ -50,17 +50,17 @@ namespace Charcoal.Controllers
 
         public ActionResult CurrentTab(long projectId)
         {
-            return View("DeveloperView",new StoriesCollectionViewModel("Current", stories));
+            return View("DeveloperView", new StoriesCollectionViewModel("Current", stories, projectId));
         }
 
         public ActionResult BacklogTab(long projectId)
         {
-            return View("DeveloperView", new StoriesCollectionViewModel("Back", stories));
+            return View("DeveloperView", new StoriesCollectionViewModel("Back", stories, projectId));
         }
 
         public ActionResult IceboxTab(long projectId)
         {
-            return View("DeveloperView", new StoriesCollectionViewModel("Ice", stories));
+            return View("DeveloperView", new StoriesCollectionViewModel("Ice", stories, projectId));
         }
 
     }

@@ -1,5 +1,17 @@
 ﻿@model Charcoal.Models.StoryViewModel
-<div class="container-fluid">
+           
+<table class="story-table">
+<tr class="story-row @Model.Status">
+    <td class="story-column">@Html.Partial("StoryDetails", Model)</td>
+    <td class="task-column">
+        @foreach (var task in Model.Tasks) {
+           @Html.Partial("TaskDetails", task)
+        }
+    </td>
+</tr>
+</table>
+
+@*<div class="container-fluid">
     <div class="row-fluid">
         <div class="span2" id="storycard">
             <div class="row">
@@ -41,4 +53,4 @@
             }
         </div>
     </div>
-</div>
+</div>*@

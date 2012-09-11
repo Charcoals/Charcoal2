@@ -5,13 +5,22 @@
 }
 <div class="page-header container-fluid">
     <h1 class="span3">@Model.CollectionName</h1>
-    <form class="pull-right">
-        <input type="text" class="search-query" placeholder="Search">
-    </form>
+    <div id="fat-menu" class="dropdown btn btn-mini">
+        <a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown">
+            Navigate to<b class="caret"></b> </a>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
+            <li>@Html.ActionLink("Current", "CurrentTab", new { projectId = Model.ProjectId })
+            </li>
+            <li>@Html.ActionLink("Backlog", "BacklogTab", new { projectId = Model.ProjectId })
+            </li>
+            <li>@Html.ActionLink("Ice", "IceboxTab", new { projectId = Model.ProjectId })
+            </li>
+        </ul>
+    </div>
 </div>
-<div class="container-fluid">
-@foreach (var story in Model.Stories)
-{
-    Html.RenderPartial("StoryRow", story);
-}
+<div class="container-fluid story-table">
+    @foreach (var story in Model.Stories)
+    {
+        Html.RenderPartial("StoryRow", story);
+    }
 </div>
