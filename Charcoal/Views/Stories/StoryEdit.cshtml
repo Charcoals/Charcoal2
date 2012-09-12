@@ -1,0 +1,70 @@
+﻿@model Charcoal.Models.StoryViewModel
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            ×</button>
+        <h3 id="myModalLabel">
+            Edit Story</h3>
+    </div>
+    <div class="modal-body container-fluid">
+        @Html.HiddenFor(model => model.Id)
+        <div class="control-group">
+            <div class="control-label">
+                @Html.LabelFor(model => model.Title)
+            </div>
+            <div class="controls">
+                @Html.EditorFor(model => model.Title)
+                @Html.ValidationMessageFor(model => model.Title)
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label">
+                @Html.LabelFor(model => model.Description)
+            </div>
+            <div class="controls">
+                @Html.EditorFor(model => model.Description)
+                @Html.ValidationMessageFor(model => model.Description)
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label">
+                @Html.LabelFor(model => model.Estimate)
+            </div>
+            <div class="controls">
+                @Html.EditorFor(model => model.Estimate)
+                @Html.ValidationMessageFor(model => model.Estimate)
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label">
+                @Html.LabelFor(model => model.Status)
+            </div>
+            <div class="controls">
+                @Html.DropDownListFor(e => e.Status, Model.Statuses)
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label">
+                @Html.LabelFor(model => model.IterationType)
+            </div>
+            <div class="controls">
+                @Html.DropDownListFor(e => e.IterationType, Model.IterationTypes)
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label">
+                @Html.LabelFor(model => model.StoryType)
+            </div>
+            <div class="controls">
+                @Html.DropDownListFor(e => e.StoryType, Model.StoryTypes)
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">
+            Close</button>
+        <input type="submit" class="btn btn-primary" value="Save" />
+    </div>
+}

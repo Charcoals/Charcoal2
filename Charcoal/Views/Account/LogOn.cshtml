@@ -2,17 +2,18 @@
 @{
     ViewBag.Title = "Login";
 }
-<p>
-    <div class="hero-unit">
-        <h1>
-            Charcoal Login</h1>
-        <p>
-            Please login using your Charcoal Account</p>
-        <p>
-        </p>
-    </div>
-</p>
-@using (Html.BeginForm()) {
+<div class="hero-unit">
+    <h1>
+        Charcoal Login</h1>
+    <p>
+        Please login using your Charcoal Account</p>
+    <p>
+    </p>
+</div>
+
+
+@using (Html.BeginForm())
+{
     <fieldset>
         <div id="logonForm" class="offset1">
             <div class="row">
@@ -36,7 +37,7 @@
                 </div>
             </div>
             <div class="row">
-            <div class="span4">
+                <div class="span4">
                     <label>
                         Remember Me?</label>
                 </div>
@@ -44,7 +45,7 @@
                     @Html.CheckBoxFor(model => model.RememberMe)
                 </div>
             </div>
-            @Html.ActionLink("Login", "Login", "Account", Model, new { @class = "btn" })
+            <input type="submit" class="btn" value="Login" />
         </div>
     </fieldset>
 }

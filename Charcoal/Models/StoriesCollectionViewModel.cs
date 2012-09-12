@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Web.Mvc;
 using Charcoal.Core.Entities;
 
 namespace Charcoal.Models
@@ -17,23 +19,62 @@ namespace Charcoal.Models
         }
     }
 
+    public static class EnumHelper
+    {
+        
+        public static List<SelectListItem> GetEnumItems<T>(this T enumType)
+        {
+            var values = (T[]) Enum.GetValues(typeof (T));
+            return values.Select(e => new SelectListItem {Selected = enumType.Equals(e), Text = e.ToString(), Value = e.ToString()}).ToList();
+        }
+    }
+
     public class StoryViewModel
     {
-        public long Id { get; private set; }
-        public string Title { get; private set; }
-        public string Description { get; private set; }
-        public string Estimate { get; private set; }
-        public IterationType IterationType { get; private set; }
-        public StoryType StoryType { get; private set; }
-        public StoryStatus Status { get; private set; }
+        public long Id { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public int? Estimate { get; set; }
+        public IterationType IterationType { get; set; }
+        public StoryType StoryType { get; set; }
+        public StoryStatus Status { get; set; }
         public IEnumerable<TaskViewModel> Tasks { get; private set; }
+
+        public string FormattedEstimate
+        {
+            get
+            {
+                return Estimate.HasValue ? Estimate + " pts" : "Unestimated";
+            }
+        }
+
+
+        public List<SelectListItem> Statuses
+        {
+            get { return Status.GetEnumItems(); }
+        }
+
+        public List<SelectListItem> IterationTypes
+        {
+            get { return IterationType.GetEnumItems(); }
+        }
+
+        public List<SelectListItem> StoryTypes
+        {
+            get { return StoryType.GetEnumItems(); }
+        }
+
+        public StoryViewModel()
+        {
+            Tasks = new List<TaskViewModel>();
+        }
 
         public StoryViewModel(Story story)
         {
             Id = story.Id;
             Title = story.Title;
             Description = story.Description;
-            Estimate = story.Estimate.HasValue ? story.Estimate + " pts" : "Unestimated";
+            Estimate = story.Estimate;
             IterationType = story.IterationType;
             StoryType = story.StoryType;
             Status = story.Status;
