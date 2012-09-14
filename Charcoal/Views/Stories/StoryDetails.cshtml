@@ -1,6 +1,6 @@
 ﻿@model Charcoal.Models.StoryViewModel
            
-<div class="@Model.GetCardStyle()">
+<div class="@Model.GetCardStyle()" id="story-@Model.Id">
     <div>
         <div class="story-details">
             <div class="pull-right">@Model.FormattedEstimate</div>

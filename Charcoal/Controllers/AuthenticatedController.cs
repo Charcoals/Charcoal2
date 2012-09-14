@@ -5,12 +5,12 @@ using System.Web.Security;
 namespace Charcoal.Controllers
 {
     [SessionState(System.Web.SessionState.SessionStateBehavior.ReadOnly)]
-    public class BaseController : Controller {
+    public class AuthenticatedController : Controller {
         protected string Token {
             get {
                 if (Session != null) {
                     var token = Session["token"];
-                    if (token is string) {
+                    if (token != null && token is string) {
                         return token as string;
                     }
                 }

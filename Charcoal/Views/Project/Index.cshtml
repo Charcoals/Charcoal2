@@ -1,0 +1,26 @@
+﻿@model IEnumerable<Charcoal.Models.ProjectViewModel>
+@{
+    ViewBag.Title = "Projects";
+    Layout = "~/Views/Shared/DashboardLayout.cshtml";
+}
+<div class="container-fluid">
+    <div class="pull-right">
+        @Html.ActionLink("Create New Project", "Create", "Project", new { @class = "btn btn-large btn-primary" })
+    </div>
+    <div class="container-fluid">
+        <div class="page-header">
+            <h1>
+                All your projects</h1>
+        </div>
+        @{
+            if(Model.Count()==0)
+            {
+                <div class="alert-info">You are yet to create a projct. Hint: <i>Use the 'Create New Project' button</i></div>
+            }
+        }
+        @foreach (var project in Model)
+        {
+            Html.RenderPartial("ProjectControl", project);
+        }
+    </div>
+</div>

@@ -4,15 +4,21 @@ using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
+using Charcoal.Core;
 using Charcoal.Models;
 
 namespace Charcoal.Controllers
 {
     [SessionState(System.Web.SessionState.SessionStateBehavior.Required)]
-    public class AccountController : Controller
+    public class AccountController : AuthenticatedController
     {
-        //
-        // GET: /Account/
+        IAccountProvider m_accountProvider;
+
+        public AccountController(IAccountProvider accountProvider)
+        {
+            m_accountProvider = accountProvider;
+        }
 
         public ActionResult LogOn()
         {
@@ -20,11 +26,25 @@ namespace Charcoal.Controllers
         }
 
         [HttpPost]
-        public ActionResult LogOn(LogOnModel logOnModel)
+        public ActionResult LogOn(LogOnModel model, string returnUrl)
         {
+            if (ModelState.IsValid)
+            {
+                var token = m_accountProvider.Authenticate(model.UserName, model.Password);
+                if (!string.IsNullOrWhiteSpace(token))
+                {
+                    Token = token;
+                    FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                    if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
+                    {
+                        return Redirect(returnUrl);
+                    }
+                    return RedirectToAction("Index", "Dashboard");
+                }
+                ModelState.AddModelError("", "The user name or password provided is incorrect.");
+            }
 
-            return RedirectToAction("Index", "Dashboard");
-            //return "in";
+            return View(model);
         }
 
         public ActionResult Profile()
@@ -34,7 +54,9 @@ namespace Charcoal.Controllers
 
         public ActionResult LogOff()
         {
-            throw new NotImplementedException();
+            FormsAuthentication.SignOut();
+            Token = null;
+            return RedirectToAction("LogOn");
         }
 
         public ActionResult Register()
@@ -45,7 +67,17 @@ namespace Charcoal.Controllers
         [HttpPost]
         public ActionResult Register(RegisterModel user)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                MembershipCreateStatus createStatus;
+                Membership.CreateUser(user.UserName, user.Password, user.Email, user.FirstName, user.LastName, false, null, out createStatus);
+
+                if (createStatus == MembershipCreateStatus.Success)
+                {
+                    return RedirectToAction("LogOn");
+                }
+            }
+            return View(user);
         }
     }
 

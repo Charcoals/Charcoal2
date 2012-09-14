@@ -5,59 +5,23 @@ using System.Web;
 using System.Web.Mvc;
 using Charcoal.Core.Entities;
 using Charcoal.Models;
+using Charcoal.Core;
 
 namespace Charcoal.Controllers
 {
-    public class DashboardController : Controller
+    public class DashboardController : AuthenticatedController
     {
-        private List<Project> projects = new List<Project>
-                                             {
-                                                 new Project
-                                                     {
-                                                         Description = "project 1 description",
-                                                         Title = "Project 1 title",
-                                                         Id = 1,
-                                                         Velocity = 10
-                                                     },
-                                                 new Project
-                                                     {
-                                                         Description =
-                                                             "project 2 description",
-                                                         Title = "Project 2 title",
-                                                         Id = 2,
-                                                         Velocity = 15
-                                                     },
-                                                 new Project
-                                                     {
-                                                         Description =
-                                                             "project 3 description",
-                                                         Title = "Project 3 title",
-                                                         Id = 3,
-                                                         Velocity = 25
-                                                     }
-                                             };
+        private readonly IProjectProvider m_projectProvider;
 
-        private List<ActivityViewModel> activities = new List<ActivityViewModel>
-                                                         {
-                                                             new ActivityViewModel
-                                                                 {
-                                                                     Description = "Update stufff 1",
-                                                                     OccuredAt = new DateTime(2011, 2, 2)
-                                                                 },
-                                                             new ActivityViewModel
-                                                                 {
-                                                                     Description = "Update stufff 2",
-                                                                     OccuredAt = new DateTime(2011, 2, 3)
-                                                                 },
-                                                             new ActivityViewModel
-                                                                 {
-                                                                     Description = "Update stufff 3",
-                                                                     OccuredAt = new DateTime(2011, 2, 4)
-                                                                 }
-                                                         };
+        public DashboardController(IProjectProvider projectProvider)
+        {
+            m_projectProvider = projectProvider;
+        }
+
         public ActionResult Index()
         {
-            return View(new DashboardViewModel(projects, activities));
+            var projects = m_projectProvider.GetProjects();
+            return View(new DashboardViewModel(projects, new List<ActivityViewModel>()));
         }
 
         public ActionResult Help()

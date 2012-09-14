@@ -4,6 +4,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Charcoal.Common.Config;
+using Charcoal.Core;
+using Charcoal.DataLayer;
+using StructureMap;
 
 namespace Charcoal {
 	// Note: For instructions on enabling IIS6 or IIS7 classic mode, 
@@ -30,6 +34,38 @@ namespace Charcoal {
 
 			RegisterGlobalFilters(GlobalFilters.Filters);
 			RegisterRoutes(RouteTable.Routes);
+
+            var tokenRetrieval = new Func<string>(() =>
+            {
+                if (HttpContext.Current != null)
+                {
+                    var token = HttpContext.Current.Session["token"];
+                    if (token is string)
+                    {
+                        return token as string;
+                    }
+                }
+                return null;
+            });
+
+
+
+            var storyProvider = new Func<IStoryProvider>(() => new CharcoalStoryProvider());
+            var userRepo = new Func<IUserRepository>(() => new UserRepository());
+            ObjectFactory.Initialize(context =>
+            {
+                context.For<IAccountProvider>().Use(() => new CharcoalAccountProvider(userRepo()));
+                context.For<IProjectProvider>().Use(() => new CharcoalProjectProvider(tokenRetrieval()));
+                context.For<IStoryProvider>().Use(storyProvider);
+                context.For<IAnalyticsProvider>().Use(() => new AnalyticsProvider(storyProvider()));
+                context.Scan(ias =>
+                {
+                    ias.TheCallingAssembly();
+                    ias.AddAllTypesOf<Controller>();
+                });
+            });
+
+            ControllerBuilder.Current.SetControllerFactory(new StructureMapControllerFactory());
 		}
 	}
 }

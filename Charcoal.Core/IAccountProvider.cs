@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Charcoal.Core.Entities;
 
 namespace Charcoal.Core {
@@ -5,5 +6,6 @@ namespace Charcoal.Core {
 	{
 		string Authenticate(string username, string password);
 		OperationResponse CreateUser(User user);
+	    List<User> GetAllUsers(string apiKey);
 	}
 }

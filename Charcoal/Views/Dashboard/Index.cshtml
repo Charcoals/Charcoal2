@@ -14,18 +14,29 @@
                 <div class="span5">
                     <h1>
                         <small>Projects</small></h1>
-                        @foreach(var project in Model.Projects)
+                    @{
+                        if (Model.Projects.Count == 0)
                         {
-                            Html.RenderPartial("ProjectControl", project);
+                        <div class="alert alert-error">
+                           <strong>Warning!</strong>No project avaiable. You can create one through
+                            @Html.ActionLink("here", "Index", "Project")
+                        </div>
+                        <div>
+                        </div>
                         }
+                    }
+                    @foreach (var project in Model.Projects)
+                    {
+                        Html.RenderPartial("ProjectControl", project);
+                    }
                 </div>
                 <div class="span5">
                     <h1>
                         <small>Recent activities</small></h1>
-                        @foreach(var activityViewModel in Model.Activities)
-                        {
-                            Html.RenderPartial("ActivityControl", activityViewModel);
-                        }
+                    @foreach (var activityViewModel in Model.Activities)
+                    {
+                        Html.RenderPartial("ActivityControl", activityViewModel);
+                    }
                 </div>
             </div>
         </div>

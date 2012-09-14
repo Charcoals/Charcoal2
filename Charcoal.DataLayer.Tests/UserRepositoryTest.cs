@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using Charcoal.Core.Entities;
 using NUnit.Framework;
@@ -24,6 +25,57 @@ namespace Charcoal.DataLayer.Tests
         {
             m_database.Projects.DeleteAll();
             m_database.Users.DeleteAll();
+        }
+
+        [Test]
+        public void CanGetAllUsers_With_Existing_ApiKey()
+        {
+            var user1 = new User();
+            user1.APIKey = Guid.NewGuid().ToString();
+            user1.UserName = "loooooooo";
+            user1.LastName = "loooe3rewrrewooooo";
+            user1.FirstName = "dsfsdf";
+            user1.Password = "wololo";
+            user1.Privileges = Privilege.Developer | Privilege.Product;
+            user1.Email = "dude@dude.org";
+
+            DatabaseOperationResponse response = m_repository.Save(user1);
+            Assert.IsTrue(response.HasSucceeded);
+            var user2 = new User();
+            user2.APIKey = Guid.NewGuid().ToString();
+            user2.UserName = "laaaaaaaaa";
+            user2.LastName = "loooe3rewrrewooooo";
+            user2.FirstName = "dsfsdf";
+            user2.Password = "wololo";
+            user2.Privileges = Privilege.Developer | Privilege.Product;
+            user2.Email = "dude@dude2.org";
+
+             response = m_repository.Save(user2);
+            Assert.IsTrue(response.HasSucceeded, response.Description);
+
+            var users = m_repository.GetAllUsers(user2.APIKey);
+            Assert.AreEqual(2, users.Count);
+            Assert.IsTrue(users.Exists(e=> e.APIKey == user1.APIKey));
+            Assert.IsTrue(users.Exists(e => e.APIKey == user2.APIKey));
+        }
+
+        [Test]
+        public void CannotGetAllUsers_With_NonExisting_ApiKey()
+        {
+            var user1 = new User();
+            user1.APIKey = Guid.NewGuid().ToString();
+            user1.UserName = "loooooooo";
+            user1.LastName = "loooe3rewrrewooooo";
+            user1.FirstName = "dsfsdf";
+            user1.Password = "wololo";
+            user1.Privileges = Privilege.Developer | Privilege.Product;
+            user1.Email = "dude@dude.org";
+
+            var response = m_repository.Save(user1);
+            Assert.IsTrue(response.HasSucceeded);
+
+            var users = m_repository.GetAllUsers(Guid.NewGuid().ToString());
+            Assert.AreEqual(0, users.Count);
         }
 
         [Test]

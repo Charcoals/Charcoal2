@@ -11,6 +11,7 @@ namespace Charcoal.DataLayer
         dynamic FindByUserName(string name);
         bool IsValid(string userName, string password);
         string GetAPIKey(string userName, string password);
+        List<dynamic> GetAllUsers(string apiKey);
     }
 
     public class UserRepository : IUserRepository
@@ -131,6 +132,17 @@ namespace Charcoal.DataLayer
             var database = Database.OpenConnection(m_connectionString);
             return database.Users.Find(database.Users.UserName == userName
                 && database.Users.Password == password).APIKey;
+        }
+
+        public List<dynamic> GetAllUsers(string apiKey)
+        {
+            var database = Database.OpenConnection(m_connectionString);
+            var user = database.Users.FindByAPIKey(apiKey);
+            if(user != null && user.APIKey == apiKey)
+            {
+                return database.Users.All().ToList();
+            }
+            return new List<dynamic>();
         }
     }
 }

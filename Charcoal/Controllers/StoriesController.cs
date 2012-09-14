@@ -8,7 +8,7 @@ using Charcoal.Models;
 
 namespace Charcoal.Controllers
 {
-    public class StoriesController : Controller
+    public class StoriesController : AuthenticatedController
     {
         //
         // GET: /Stories/
