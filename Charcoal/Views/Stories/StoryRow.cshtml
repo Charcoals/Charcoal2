@@ -3,54 +3,10 @@
 <table class="story-table">
 <tr class="story-row @Model.Status">
     <td class="story-column">@Html.Partial("StoryDetails", Model)</td>
-    <td class="task-column">
+    <td class="task-column" id="storytasks-@Model.Id">
         @foreach (var task in Model.Tasks) {
-           @Html.Partial("TaskDetails", task)
+            @Html.Partial("TaskDetails", task)
         }
     </td>
 </tr>
 </table>
-
-@*<div class="container-fluid">
-    <div class="row-fluid">
-        <div class="span2" id="storycard">
-            <div class="row">
-                <span>@Model.Title</span> <span class="offset3">@Model.Estimate</span>
-            </div>
-            @Model.Description
-            <div class="btn-group-vertical">
-                <button class="btn">
-                    Delete</button>
-                <button class="btn">
-                    Edit</button>
-                <button class="btn">
-                    Comment</button>
-            </div>
-        </div>
-        <div class="span10">
-            <!--Body content-->
-            @foreach (var task in Model.Tasks)
-            {
-                <div id="taskcard">
-                    <div class="row">
-                        <div>@task.Description</div>
-                        <div class="btn-group-vertical offset1">
-                            <button class="btn">
-                                X</button>
-                                <button class="btn">
-                                Assign</button>
-                            <button class="btn">
-                                Toggle</button>
-                        </div>
-                    </div>
-                    <div class="btn-group">
-                        <button class="btn">
-                            Left</button>
-                        <button class="btn">
-                            right</button>
-                    </div>
-                </div>
-            }
-        </div>
-    </div>
-</div>*@

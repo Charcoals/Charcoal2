@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
 using Charcoal.Core;
 using System.Linq;
@@ -6,7 +7,7 @@ using Charcoal.Models;
 
 namespace Charcoal.Controllers
 {
-    public class ProjectController : Controller
+    public class ProjectController : AuthenticatedController
     {
         private readonly IProjectProvider m_projectProvider;
 
@@ -17,19 +18,50 @@ namespace Charcoal.Controllers
 
         public ActionResult Index()
         {
-            var projects = m_projectProvider.GetProjects();
-            return View(projects.Select(e=>new ProjectViewModel(e)));
+            return View(GetUserProjects());
         }
 
-
-        public string Edit(long id)
+        private IEnumerable<ProjectViewModel> GetUserProjects()
         {
-            return "llll";
+            var projects = m_projectProvider.GetProjects();
+            var projectViewModels = projects.Select(e => new ProjectViewModel(e));
+            return projectViewModels;
+        }
+
+        public ActionResult Edit(long id)
+        {
+            var project = m_projectProvider.GetProject(id);
+            var availableUsers = m_projectProvider.GetAvailableUsers();
+            return View(new ProjectEditModel(project, availableUsers));
+            //return Json(new ProjectEditModel(project, availableUsers), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(ProjectEditModel model)
+        {
+            return View();
         }
 
         public ActionResult Create()
         {
-            throw new NotImplementedException();
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Create(ProjectCreateModel project)
+        {
+            if (ModelState.IsValid)
+            {
+                var response = m_projectProvider.CreateProject(project.Convert());
+
+                if (response.HasSucceeded)
+                {
+                    return View("Index", GetUserProjects());
+                }
+
+                ModelState.AddModelError("Title", "Could not create project: "+response.Message);
+            }
+            return View(project);
         }
     }
 }

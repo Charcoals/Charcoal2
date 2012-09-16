@@ -130,6 +130,7 @@
     <Compile Include="Models\CharcoalMembershipProvider.cs" />
     <Compile Include="Models\DashboardViewModel.cs" />
     <Compile Include="Models\LogOnModel.cs" />
+    <Compile Include="Models\MemberViewModel.cs" />
     <Compile Include="Models\ProfileModel.cs" />
     <Compile Include="Models\ProjectViewModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
@@ -300,6 +301,15 @@
   <ItemGroup>
     <Content Include="Views\Project\Index.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Project\Create.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Project\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Stories\StoryCreate.cshtml" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
@@ -318,7 +328,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>30851</DevelopmentServerPort>
+          <DevelopmentServerPort>23378</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

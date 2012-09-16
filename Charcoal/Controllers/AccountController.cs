@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using Charcoal.Core;
@@ -13,7 +9,7 @@ namespace Charcoal.Controllers
     [SessionState(System.Web.SessionState.SessionStateBehavior.Required)]
     public class AccountController : AuthenticatedController
     {
-        IAccountProvider m_accountProvider;
+        readonly IAccountProvider m_accountProvider;
 
         public AccountController(IAccountProvider accountProvider)
         {

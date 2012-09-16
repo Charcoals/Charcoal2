@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using Simple.Data;
+using System.Linq;
 
 namespace Charcoal.DataLayer
 {
@@ -97,7 +98,10 @@ namespace Charcoal.DataLayer
         public dynamic Find(long id)
         {
             var database = Database.OpenConnection(m_connectionString);
-            return database.Projects.FindById(id);
+            return database.Projects
+                .FindAllById(id)
+                .With(database.Projects.UsersXProjects.Users.As("Users"))
+                .ToList<dynamic>();
         }
 
         public List<dynamic> GetProjectsByUseToken(string apiToken)

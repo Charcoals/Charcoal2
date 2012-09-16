@@ -29,6 +29,8 @@ namespace Charcoal.Models
         }
     }
 
+
+
     public class StoryViewModel
     {
         public long Id { get; set; }
@@ -39,6 +41,26 @@ namespace Charcoal.Models
         public StoryType StoryType { get; set; }
         public StoryStatus Status { get; set; }
         public IEnumerable<TaskViewModel> Tasks { get; private set; }
+        public long ProjectId { get; private set; }
+
+        public StoryViewModel()
+        {
+            Tasks = new List<TaskViewModel>();
+        }
+        
+        public StoryViewModel(Story story)
+        {
+            Id = story.Id;
+            Title = story.Title;
+            Description = story.Description;
+            Estimate = story.Estimate;
+            IterationType = story.IterationType;
+            StoryType = story.StoryType;
+            Status = story.Status;
+            ProjectId = story.ProjectId;
+            if (story.Tasks != null)
+                Tasks = story.Tasks.Select(e => new TaskViewModel(e));
+        }
 
         public string FormattedEstimate
         {
@@ -62,25 +84,6 @@ namespace Charcoal.Models
         public List<SelectListItem> StoryTypes
         {
             get { return StoryType.GetEnumItems(); }
-        }
-
-        public StoryViewModel()
-        {
-            Tasks = new List<TaskViewModel>();
-        }
-
-        public StoryViewModel(Story story)
-        {
-            Id = story.Id;
-            Title = story.Title;
-            Description = story.Description;
-            Estimate = story.Estimate;
-            IterationType = story.IterationType;
-            StoryType = story.StoryType;
-            Status = story.Status;
-
-            if (story.Tasks != null)
-                Tasks = story.Tasks.Select(e => new TaskViewModel(e));
         }
 
         public string GetHeader()

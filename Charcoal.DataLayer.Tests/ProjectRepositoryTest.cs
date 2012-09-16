@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Charcoal.Core.Entities;
 using NUnit.Framework;
 using Simple.Data;
+using System.Linq;
 
 namespace Charcoal.DataLayer.Tests
 {
@@ -93,7 +94,6 @@ namespace Charcoal.DataLayer.Tests
             Assert.IsTrue(response.HasSucceeded);
 
             Project retrievedProject = m_database.Projects.All().ToList<Project>()[0];
-
             Project foundUser = m_repository.Find(retrievedProject.Id);
             VerifyProject(retrievedProject, foundUser);
         }
