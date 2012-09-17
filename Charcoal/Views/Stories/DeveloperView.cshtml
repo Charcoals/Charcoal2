@@ -30,6 +30,6 @@
 
 <div class="modal hide fade" id="newstory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     @{
-        Html.RenderPartial("StoryCreate", new StoryViewModel());
+        Html.RenderPartial("StoryCreate", new StoryViewModel(Model.ProjectId));
     }
 </div>

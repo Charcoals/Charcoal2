@@ -1,46 +1,23 @@
-﻿@model Charcoal.Models.StoryViewModel
-<script type="text/javascript">
-    
-    //TODO: use knockout js for data binding
-    function CreateStory() {
-        //projectId, title, description, estimate, iterationType, storytype, status
-        var projectId = 7;
-        var title = $("#createStoryBody").text();
-        $.ajax({
-            url: "/Stories/CreateStory",
-            type: "POST",
-            data: 'projectId=' + projectId + '&title=' + title + '&description=' + 'f'
-            + 'estimate=' + 'f' + '&iterationType=' + 'f'
-            + '&storytype=' + 'f' + '&status=' + 'f',
-            success: function (data) {
-                $("#storyTable").append($(data));
-                $('#newstory').modal('hide');
-                //alert(data);
-            },
-            error: function (xhr, textStatus, error) {
-                alert('ajax:failure', [xhr, status, error]);
-            }
-        });
-    }
-
-</script>
-<div class="modal-form">
+﻿@using Charcoal.Core.Entities
+@using Charcoal.Models
+@model Charcoal.Models.StoryViewModel
+<div class="modal-form" id="createStoryModal">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
             ×</button>
         <h3 id="myModalLabel">
-            Edit Story</h3>
+            Create Story</h3>
     </div>
-    <div class="modal-body container-fluid" id="createStoryBody">
-        @Html.HiddenFor(model => model.Id)
-        @*<div class="hidden" id="projectId">@Model.ProjectId</div>*@
+    <div class="modal-body container-fluid">
+        <div class="alert-danger">
+            <strong data-bind="text: titleError"></strong>
+        </div>
         <div class="control-group">
             <div class="control-label">
                 @Html.LabelFor(model => model.Title)
             </div>
             <div class="controls" id="title">
-                @Html.EditorFor(model => model.Title)
-                @Html.ValidationMessageFor(model => model.Title)
+                <input data-bind="value: storyTitle" />
             </div>
         </div>
         <div class="control-group">
@@ -48,8 +25,7 @@
                 @Html.LabelFor(model => model.Description)
             </div>
             <div class="controls">
-                @Html.EditorFor(model => model.Description)
-                @Html.ValidationMessageFor(model => model.Description)
+                <textarea data-bind="value: description" type="text"></textarea>
             </div>
         </div>
         <div class="control-group">
@@ -57,8 +33,10 @@
                 @Html.LabelFor(model => model.Estimate)
             </div>
             <div class="controls">
-                @Html.EditorFor(model => model.Estimate)
-                @Html.ValidationMessageFor(model => model.Estimate)
+                <select data-bind="options: estimates, 
+                       optionsCaption: 'Choose estimate',
+                       value: estimate">
+                </select>
             </div>
         </div>
         <div class="control-group">
@@ -66,7 +44,10 @@
                 @Html.LabelFor(model => model.Status)
             </div>
             <div class="controls">
-                @Html.DropDownListFor(e => e.Status, Model.Statuses)
+                <select data-bind="options: statuses, 
+                       optionsCaption: 'Choose status',
+                       value: storyStatus">
+                </select>
             </div>
         </div>
         <div class="control-group">
@@ -74,7 +55,10 @@
                 @Html.LabelFor(model => model.IterationType)
             </div>
             <div class="controls">
-                @Html.DropDownListFor(e => e.IterationType, Model.IterationTypes)
+                <select data-bind="options: iterationTypes, 
+                       optionsCaption: 'Choose iteration',
+                       value: iterationType">
+                </select>
             </div>
         </div>
         <div class="control-group">
@@ -82,17 +66,71 @@
                 @Html.LabelFor(model => model.StoryType)
             </div>
             <div class="controls">
-                @Html.DropDownListFor(e => e.StoryType, Model.StoryTypes)
+                <select data-bind="options: storyTypes, 
+                       optionsCaption: 'Choose type',
+                       value: storyType">
+                </select>
             </div>
         </div>
     </div>
     <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">
             Close</button>
-        <button type="submit" class="btn btn-primary" value="Save" 
-                onclick="CreateStory()">Create</button>
-               
+        <button type="submit" class="btn btn-primary" value="Save" data-bind="click: createStory">
+            Create</button>
         @*onclick="CreateStory(@Model.ProjectId,'@Html.Raw(@Model.Title)', '@Html.Raw(@Model.Description)',@Model.Estimate,@Html.Raw(@Model.IterationType.ToString())','@Html.Raw(@Model.StoryType.ToString())', '@Html.Raw(@Model.Status.ToString())')" />*@
     </div>
-
 </div>
+<script type="text/javascript">
+
+    function isNullOrEmpty(str) {
+        return (!str || /^\s*$/ .test(str));
+    }
+    function StoryModel() {
+        
+        this.iterationTypes = @Html.Raw(EnumHelper.GetEnumStrings<IterationType>()) ;
+        this.storyTypes = @Html.Raw(EnumHelper.GetEnumStrings<StoryType>());
+        this.statuses = @Html.Raw(EnumHelper.GetEnumStrings<StoryStatus>());
+        this.estimates = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        this.storyTitle = ko.observable("");
+        this.description = ko.observable("");
+        this.estimate = ko.observable("");
+        this.iterationType = ko.observable("");
+        this.storyType = ko.observable("");
+        this.projectId = @Model.ProjectId ;
+        this.storyStatus = ko.observable("");
+
+        this.titleError = ko.computed(function() {
+            var str = this.storyTitle();
+            if(isNullOrEmpty(str)) {
+                return "no title specified";
+            } else {
+                return "";
+            }
+        }, this);
+        this.createStory = function () {
+            if(isNullOrEmpty(this.storyTitle())) {
+                alert("you are yet to specify a title");
+            }
+            else {
+                $.ajax({
+                    url: "/Stories/CreateStory",
+                    type: "POST",
+                    data: 'projectId=' + this.projectId + '&title=' + this.storyTitle() + '&description=' + this.description()
+                    + '&estimate=' + this.estimate() + '&iterationType=' + this.iterationType()
+                    + '&storytype=' + this.storyType() + '&status=' + this.storyStatus(),
+                    success: function(data) {
+                        $("#storyTable").append($(data));
+                        $('#newstory').modal('hide');
+                        //alert(data);
+                    },
+                    error: function(xhr, textStatus, error) {
+                        alert('ajax:failure', [xhr, status, error]);
+                    }
+                });
+            }
+        };
+    };
+
+    ko.applyBindings(new StoryModel(), document.getElementById("createStoryModal"));
+</script>

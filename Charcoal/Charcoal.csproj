@@ -129,6 +129,7 @@
     <Compile Include="Models\ActivityViewModel.cs" />
     <Compile Include="Models\CharcoalMembershipProvider.cs" />
     <Compile Include="Models\DashboardViewModel.cs" />
+    <Compile Include="Models\EnumHelper.cs" />
     <Compile Include="Models\LogOnModel.cs" />
     <Compile Include="Models\MemberViewModel.cs" />
     <Compile Include="Models\ProfileModel.cs" />

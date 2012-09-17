@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Charcoal.Core.Entities;
@@ -19,17 +18,6 @@ namespace Charcoal.Models
         }
     }
 
-    public static class EnumHelper
-    {
-        
-        public static List<SelectListItem> GetEnumItems<T>(this T enumType)
-        {
-            var values = (T[]) Enum.GetValues(typeof (T));
-            return values.Select(e => new SelectListItem {Selected = enumType.Equals(e), Text = e.ToString(), Value = e.ToString()}).ToList();
-        }
-    }
-
-
 
     public class StoryViewModel
     {
@@ -43,8 +31,9 @@ namespace Charcoal.Models
         public IEnumerable<TaskViewModel> Tasks { get; private set; }
         public long ProjectId { get; private set; }
 
-        public StoryViewModel()
+        public StoryViewModel(long projectId)
         {
+            ProjectId = projectId;
             Tasks = new List<TaskViewModel>();
         }
         
