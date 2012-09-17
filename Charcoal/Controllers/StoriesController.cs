@@ -4,104 +4,58 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Charcoal.Core;
 using Charcoal.Core.Entities;
 using Charcoal.Models;
 
 namespace Charcoal.Controllers
 {
-    public class StoriesController : AuthenticatedController
+    public class StoriesController : BaseController
     {
-        //
-        // GET: /Stories/
-        private List<Story> stories = new List<Story>
-                                          {
-                                              new Story
-                                                  {
-                                                      Id = 1,
-                                                      Description = "Story 1 desc",
-                                                      Title = "Story 1",
-                                                      Estimate = 11,
-                                                      Tasks = new List<Task>{ new Task{Description = "task1", Position = 1},new Task{Description = "task2", Position = 2}}
-                                                  },
-                                              new Story
-                                                  {
-                                                      Id = 2,
-                                                      Description = "Story 2 desc",
-                                                      Title = "Story 2",
-                                                      Estimate = 12,
-                                                      Tasks = new List<Task>{ new Task{Description = "task1", Position = 1},new Task{Description = "task2", Position = 2}}
-                                                  },
-                                              new Story
-                                                  {
-                                                      Id = 3,
-                                                      Description = "Story 3 desc",
-                                                      Title = "Story 3",
-                                                      Estimate = 13,
-                                                      Tasks = new List<Task>{ new Task{Description = "task1", Position = 1},new Task{Description = "task2", Position = 2}}
-                                                  },
-                                              new Story
-                                                  {
-                                                      Id = 4,
-                                                      Description = "Story 4 desc",
-                                                      Title = "Story 4",
-                                                      Estimate = 14,
-                                                      Tasks = new List<Task>{ new Task{Description = "task1", Position = 1},new Task{Description = "task2", Position = 2}}
-                                                  }
-                                          };
+        private readonly IStoryProvider m_storyProvider;
+
+        public StoriesController(IStoryProvider storyProvider)
+        {
+            m_storyProvider = storyProvider;
+        }
 
         public ActionResult CurrentTab(long projectId)
         {
+            var stories = m_storyProvider.GetStories(projectId, IterationType.Current);
             return View("DeveloperView", new StoriesCollectionViewModel("Current", stories, projectId));
         }
 
         public ActionResult BacklogTab(long projectId)
         {
+            var stories = m_storyProvider.GetStories(projectId, IterationType.Backlog);
             return View("DeveloperView", new StoriesCollectionViewModel("Back", stories, projectId));
         }
 
         public ActionResult IceboxTab(long projectId)
         {
+            var stories = m_storyProvider.GetStories(projectId, IterationType.Icebox);
             return View("DeveloperView", new StoriesCollectionViewModel("Ice", stories, projectId));
         }
 
         [HttpPost]
         public string CreateStory(long projectId, string title, string description, string estimate, string iterationType, string storytype, string status)
         {
-            var story = new StoryViewModel(new Story
-                                               {
-                                                   Id = 4,
-                                                   Description = "Story 4 desc",
-                                                   Title = "Story 10",
-                                                   Estimate = 14,
-                                                   Tasks =
-                                                       new List<Task>
-                                                           {
-                                                               new Task {Description = "task1", Position = 1},
-                                                               new Task {Description = "task2", Position = 2}
-                                                           },
-                                                   Status = StoryStatus.Started,
-                                                   StoryType = StoryType.Bug,
-                                                   IterationType = IterationType.Current
-                                               });
-            return RenderPartialViewToString("StoryRow", story);
+            var createdStory = m_storyProvider.AddNewStory(projectId, CreateStory(title, description, estimate,iterationType,storytype,status));
+            return RenderPartialViewToString("StoryRow", new StoryViewModel(createdStory));
 
         }
 
-        string RenderPartialViewToString(string viewName, object model)
+        static Story CreateStory(string title, string description, string estimate, string iterationType, string storytype, string status)
         {
-            if (string.IsNullOrEmpty(viewName))
-                viewName = ControllerContext.RouteData.GetRequiredString("action");
-
-            ViewData.Model = model;
-
-            using (StringWriter sw = new StringWriter())
-            {
-                ViewEngineResult viewResult = ViewEngines.Engines.FindPartialView(ControllerContext, viewName);
-                ViewContext viewContext = new ViewContext(ControllerContext, viewResult.View, ViewData, TempData, sw);
-                viewResult.View.Render(viewContext, sw);
-
-                return sw.GetStringBuilder().ToString();
-            }
+            return new Story
+                       {
+                           Title = title,
+                           Description = description,
+                           Estimate = estimate.Equals("undefined") ? null : (int?)int.Parse(estimate),
+                           IterationType = iterationType.Equals("undefined") ? IterationType.Icebox : (IterationType)Enum.Parse(typeof(IterationType), iterationType),
+                           StoryType = storytype.Equals("undefined") ? StoryType.Feature : (StoryType)Enum.Parse(typeof(StoryType), storytype),
+                           Status = status.Equals("undefined") ? StoryStatus.UnScheduled : (StoryStatus)Enum.Parse(typeof(StoryStatus), status),
+                       };
         }
 
     }

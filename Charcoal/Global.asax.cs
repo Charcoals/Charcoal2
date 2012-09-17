@@ -49,9 +49,8 @@ namespace Charcoal {
             });
 
 
-
-            var storyProvider = new Func<IStoryProvider>(() => new CharcoalStoryProvider());
             var userRepo = new Func<IUserRepository>(() => new UserRepository());
+            var storyProvider = new Func<IStoryProvider>(() => new CharcoalStoryProvider(tokenRetrieval(),userRepo:userRepo()));
             ObjectFactory.Initialize(context =>
             {
                 context.For<IAccountProvider>().Use(() => new CharcoalAccountProvider(userRepo()));

@@ -7,7 +7,7 @@ using Charcoal.Models;
 
 namespace Charcoal.Controllers
 {
-    public class ProjectController : AuthenticatedController
+    public class ProjectController : BaseController
     {
         private readonly IProjectProvider m_projectProvider;
 

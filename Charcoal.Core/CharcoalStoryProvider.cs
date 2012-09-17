@@ -7,18 +7,37 @@ namespace Charcoal.Core
 {
     public class CharcoalStoryProvider : IStoryProvider
     {
+        private readonly string m_apiKey;
+        private readonly IUserRepository m_userRepo;
+        private long m_userId=-1;
         private readonly ITaskRepository m_taskRepository;
         private readonly IStoryRepository m_storyRepository;
 
-        public CharcoalStoryProvider(IStoryRepository storyRepository = null, ITaskRepository taskRepository = null)
+
+        public CharcoalStoryProvider(string apiKey,IStoryRepository storyRepository = null, ITaskRepository taskRepository = null,IUserRepository userRepo=null)
         {
+            m_apiKey = apiKey;
+            m_userRepo =userRepo ?? new UserRepository();
             m_taskRepository = taskRepository ?? new TaskRepository();
             m_storyRepository = storyRepository ?? new StoryRepository();
+        }
+
+        public long UserId
+        {
+            get
+            {
+                if(m_userId==-1)
+                {
+                    m_userId = (long) m_userRepo.FindByAPIKey(m_apiKey).Id;
+                }
+                return m_userId;
+            }
         }
 
         public Story AddNewStory(long projectId, Story toBeSaved)
         {
             toBeSaved.ProjectId = projectId;
+            toBeSaved.CreatedBy = UserId;
             var response = m_storyRepository.Save(toBeSaved);
             return response.HasSucceeded ? response.Object : null;
         }

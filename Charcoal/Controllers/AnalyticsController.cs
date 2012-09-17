@@ -2,7 +2,7 @@
 
 namespace Charcoal.Controllers
 {
-    public class AnalyticsController : AuthenticatedController
+    public class AnalyticsController : BaseController
     {
         public ActionResult Index()
         {

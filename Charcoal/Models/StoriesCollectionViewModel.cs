@@ -48,7 +48,13 @@ namespace Charcoal.Models
             Status = story.Status;
             ProjectId = story.ProjectId;
             if (story.Tasks != null)
+            {
                 Tasks = story.Tasks.Select(e => new TaskViewModel(e));
+            }
+            else
+            {
+                Tasks=new List<TaskViewModel>();
+            }
         }
 
         public string FormattedEstimate

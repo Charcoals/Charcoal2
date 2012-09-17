@@ -9,7 +9,7 @@ using Charcoal.Core;
 
 namespace Charcoal.Controllers
 {
-    public class DashboardController : AuthenticatedController
+    public class DashboardController : BaseController
     {
         private readonly IProjectProvider m_projectProvider;
 

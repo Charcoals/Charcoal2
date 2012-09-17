@@ -7,7 +7,7 @@ using Charcoal.Models;
 namespace Charcoal.Controllers
 {
     [SessionState(System.Web.SessionState.SessionStateBehavior.Required)]
-    public class AccountController : AuthenticatedController
+    public class AccountController : BaseController
     {
         readonly IAccountProvider m_accountProvider;
 

@@ -19,7 +19,7 @@ namespace Charcoal.Core.Tests
             storyRepo.Setup(repo => repo.Save(It.Is<Story>(e => e.ProjectId == projectId)))
                       .Returns(new DatabaseOperationResponse(true));
 
-            new CharcoalStoryProvider(storyRepo.Object, Mock.Of<ITaskRepository>()).AddNewStory(projectId, story);
+            new CharcoalStoryProvider("stuff",storyRepo.Object, Mock.Of<ITaskRepository>()).AddNewStory(projectId, story);
             storyRepo.Verify();
         }
 
@@ -30,7 +30,7 @@ namespace Charcoal.Core.Tests
             var taskRepo = new Mock<ITaskRepository>(MockBehavior.Strict);
             taskRepo.Setup(repo => repo.Save(task)).Returns(new DatabaseOperationResponse(true));
 
-            new CharcoalStoryProvider(Mock.Of<IStoryRepository>(),taskRepo.Object)
+            new CharcoalStoryProvider("stuff", Mock.Of<IStoryRepository>(), taskRepo.Object)
                                      .AddNewTask(task, projectId);
             taskRepo.Verify();
         }
@@ -42,7 +42,7 @@ namespace Charcoal.Core.Tests
             var taskRepo = new Mock<ITaskRepository>(MockBehavior.Strict);
             taskRepo.Setup(repo => repo.Update(task)).Returns(new DatabaseOperationResponse(true));
 
-            Assert.IsTrue(new CharcoalStoryProvider(Mock.Of<IStoryRepository>(), taskRepo.Object)
+            Assert.IsTrue(new CharcoalStoryProvider("stuff", Mock.Of<IStoryRepository>(), taskRepo.Object)
                                      .UpdateTask(task, projectId).HasSucceeded);
             taskRepo.Verify();
         }
@@ -54,7 +54,7 @@ namespace Charcoal.Core.Tests
             var id = 44;
             taskRepo.Setup(repo => repo.Find(id)).Returns(new Task());
 
-            new CharcoalStoryProvider(Mock.Of<IStoryRepository>(), taskRepo.Object)
+            new CharcoalStoryProvider("stuff",Mock.Of<IStoryRepository>(), taskRepo.Object)
                                      .GetTask(projectId,44,id);
             taskRepo.Verify();
         }
@@ -66,7 +66,7 @@ namespace Charcoal.Core.Tests
             var id = 44;
             taskRepo.Setup(repo => repo.Delete(id)).Returns(new DatabaseOperationResponse(true));
 
-            Assert.IsTrue(new CharcoalStoryProvider(Mock.Of<IStoryRepository>(), taskRepo.Object)
+            Assert.IsTrue(new CharcoalStoryProvider("stuff",Mock.Of<IStoryRepository>(), taskRepo.Object)
                                      .RemoveTask(projectId, 44, id));
             taskRepo.Verify();
         }
@@ -79,7 +79,7 @@ namespace Charcoal.Core.Tests
             storyRepo.Setup(repo => repo.Save(It.Is<Story>(e => e.ProjectId == projectId)))
                       .Returns(new DatabaseOperationResponse());
 
-            Assert.IsNull(new CharcoalStoryProvider(storyRepo.Object, Mock.Of<ITaskRepository>()).AddNewStory(projectId, story));
+            Assert.IsNull(new CharcoalStoryProvider("stuff",storyRepo.Object, Mock.Of<ITaskRepository>()).AddNewStory(projectId, story));
             storyRepo.Verify();
         }
 
@@ -91,7 +91,7 @@ namespace Charcoal.Core.Tests
             storyRepo.Setup(repo => repo.FindAllByIterationType(projectId,(int)IterationType.Backlog ))
                       .Returns(new List<dynamic>{story});
 
-            new CharcoalStoryProvider(storyRepo.Object, Mock.Of<ITaskRepository>()).GetStories(projectId, IterationType.Backlog);
+            new CharcoalStoryProvider("stuff",storyRepo.Object, Mock.Of<ITaskRepository>()).GetStories(projectId, IterationType.Backlog);
             storyRepo.Verify();
         }
 
@@ -103,7 +103,7 @@ namespace Charcoal.Core.Tests
             storyRepo.Setup(repo => repo.FindAllByProjectId(projectId))
                       .Returns(new List<dynamic> { story });
 
-            new CharcoalStoryProvider(storyRepo.Object, Mock.Of<ITaskRepository>()).GetAllStories(projectId);
+            new CharcoalStoryProvider("stuff",storyRepo.Object, Mock.Of<ITaskRepository>()).GetAllStories(projectId);
             storyRepo.Verify();
         }
 
@@ -115,7 +115,7 @@ namespace Charcoal.Core.Tests
             storyRepo.Setup(repo => repo.UpdateStoryStatus(storyId, (int)StoryStatus.Started))
                 .Returns(new Story());
 
-            new CharcoalStoryProvider(storyRepo.Object, Mock.Of<ITaskRepository>()).StartStory(projectId, storyId, IterationType.Undefined);
+            new CharcoalStoryProvider("stuff",storyRepo.Object, Mock.Of<ITaskRepository>()).StartStory(projectId, storyId, IterationType.Current);
             storyRepo.Verify();
         }
 
@@ -127,7 +127,7 @@ namespace Charcoal.Core.Tests
             storyRepo.Setup(repo => repo.UpdateStoryStatus(storyId, (int) StoryStatus.Finished))
                 .Returns(new Story());
 
-            new CharcoalStoryProvider(storyRepo.Object, Mock.Of<ITaskRepository>()).FinishStory(projectId, storyId, IterationType.Undefined);
+            new CharcoalStoryProvider("stuff",storyRepo.Object, Mock.Of<ITaskRepository>()).FinishStory(projectId, storyId, IterationType.Current);
             storyRepo.Verify();
         }
 
@@ -139,7 +139,7 @@ namespace Charcoal.Core.Tests
             storyRepo.Setup(repo => repo.Find(storyId))
                 .Returns(new Story());
 
-            new CharcoalStoryProvider(storyRepo.Object, Mock.Of<ITaskRepository>()).GetStory(projectId, storyId, IterationType.Undefined);
+            new CharcoalStoryProvider("stuff",storyRepo.Object, Mock.Of<ITaskRepository>()).GetStory(projectId, storyId, IterationType.Current);
             storyRepo.Verify();
         }
 
@@ -151,7 +151,7 @@ namespace Charcoal.Core.Tests
             storyRepo.Setup(repo => repo.Delete(storyId))
                 .Returns(new DatabaseOperationResponse(true));
 
-            Assert.IsTrue(new CharcoalStoryProvider(storyRepo.Object, Mock.Of<ITaskRepository>()).RemoveStory(projectId, storyId));
+            Assert.IsTrue(new CharcoalStoryProvider("stuff",storyRepo.Object, Mock.Of<ITaskRepository>()).RemoveStory(projectId, storyId));
             storyRepo.Verify();
         }
 

@@ -18,9 +18,4 @@ namespace Charcoal.Core.Entities
         Tester,
         All
     }
-
-    public enum StoryStatus
-    {
-        UnScheduled, UnStarted, Started, Finished, Delivered, Accepted, Rejected
-    }
 }

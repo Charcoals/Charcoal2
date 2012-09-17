@@ -9,6 +9,7 @@ namespace Charcoal.DataLayer
     {
         dynamic FindByEmail(string email);
         dynamic FindByUserName(string name);
+        dynamic FindByAPIKey(string apiKey);
         bool IsValid(string userName, string password);
         string GetAPIKey(string userName, string password);
         List<dynamic> GetAllUsers(string apiKey);
@@ -118,6 +119,12 @@ namespace Charcoal.DataLayer
         {
             var database = Database.OpenConnection(m_connectionString);
             return database.Users.FindByUserName(name);
+        }
+
+        public dynamic FindByAPIKey(string apiKey)
+        {
+            var database = Database.OpenConnection(m_connectionString);
+            return database.Users.FindByAPIKey(apiKey);
         }
 
         public bool IsValid(string userName, string password)
