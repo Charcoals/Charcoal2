@@ -13,6 +13,7 @@ namespace Charcoal.Controllers
     public class StoriesController : BaseController
     {
         private readonly IStoryProvider m_storyProvider;
+        //TODO: find out why the project Id keeps getting lost on story edit, and fix it
 
         public StoriesController(IStoryProvider storyProvider)
         {
@@ -40,8 +41,27 @@ namespace Charcoal.Controllers
         [HttpPost]
         public string CreateStory(long projectId, string title, string description, string estimate, string iterationType, string storytype, string status)
         {
-            var createdStory = m_storyProvider.AddNewStory(projectId, CreateStory(title, description, estimate,iterationType,storytype,status));
+            var createdStory = m_storyProvider.AddNewStory(projectId, CreateStory(title, description, estimate, iterationType, storytype, status));
             return RenderPartialViewToString("StoryRow", new StoryViewModel(createdStory));
+
+        }
+
+        [HttpDelete]
+        public string DeleteStory(long storyId)
+        {
+            bool isSucess = m_storyProvider.RemoveStory(storyId);
+            if (isSucess)
+            {
+                return "success";
+            }
+            return "failed";
+        }
+
+        [HttpPost]
+        public RedirectResult EditStory(StoryViewModel story)
+        {
+            bool isUpdate = m_storyProvider.UpdateStory(story.ToStory());
+            return Redirect(Request.UrlReferrer.ToString());
 
         }
 

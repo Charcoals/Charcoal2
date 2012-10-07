@@ -53,12 +53,13 @@ namespace Charcoal.DataLayer
             try
             {
                 var database = Database.OpenConnection(m_connectionString);
-                if (database.Stories.FindById(entity.Id) == null)
+                var found = database.Stories.FindById(entity.Id);
+                if (found == null)
                 {
                     return new DatabaseOperationResponse(false, "Item Does not exist", FailReason.ItemNoLongerExists);
                 }
-                entity.LastEditedOn = DateTime.UtcNow;
-
+                entity.ProjectId = found.ProjectId;
+                entity.CreatedOn = found.CreatedOn;
                 var inserted = database.Stories.Update(entity);
                 return new DatabaseOperationResponse(inserted == 1);
             }

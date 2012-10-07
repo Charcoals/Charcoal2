@@ -1,7 +1,9 @@
 ﻿@model Charcoal.Models.StoryViewModel
-@using (Html.BeginForm())
+@using (Html.BeginForm("EditStory", "Stories", FormMethod.Post))
 {
     @Html.ValidationSummary(true)
+    @*@Html.HiddenFor(model => model.ProjectId)*@
+
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
             ×</button>

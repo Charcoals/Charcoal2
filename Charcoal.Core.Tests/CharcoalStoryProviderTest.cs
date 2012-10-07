@@ -151,7 +151,7 @@ namespace Charcoal.Core.Tests
             storyRepo.Setup(repo => repo.Delete(storyId))
                 .Returns(new DatabaseOperationResponse(true));
 
-            Assert.IsTrue(new CharcoalStoryProvider("stuff",storyRepo.Object, Mock.Of<ITaskRepository>()).RemoveStory(projectId, storyId));
+            Assert.IsTrue(new CharcoalStoryProvider("stuff",storyRepo.Object, Mock.Of<ITaskRepository>()).RemoveStory(storyId));
             storyRepo.Verify();
         }
 

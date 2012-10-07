@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Charcoal.Common;
 using Charcoal.Core.Entities;
 using Charcoal.DataLayer;
+using System;
 
 namespace Charcoal.Core
 {
@@ -78,7 +79,7 @@ namespace Charcoal.Core
             return m_storyRepository.Find(storyId);
         }
 
-        public bool RemoveStory(long projectId, long storyId)
+        public bool RemoveStory(long storyId)
         {
             return m_storyRepository.Delete(storyId).HasSucceeded;
         }
@@ -112,6 +113,13 @@ namespace Charcoal.Core
         public List<Iteration> GetRecentIterations(long projectId, int number)
         {
             throw new System.NotImplementedException();
+        }
+
+        public bool UpdateStory(Story toStory)
+        {
+            toStory.LastEditedOn = DateTime.UtcNow;
+            toStory.CreatedBy = UserId;
+            return m_storyRepository.Update(toStory).HasSucceeded;
         }
     }
 }

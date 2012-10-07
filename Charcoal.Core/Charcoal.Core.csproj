@@ -65,6 +65,7 @@
     <Compile Include="CharcoalStoryProvider.cs" />
     <Compile Include="Entities\BaseEntity.cs" />
     <Compile Include="Entities\Iteration.cs" />
+    <Compile Include="Entities\Privilege.cs" />
     <Compile Include="Entities\Project.cs" />
     <Compile Include="Entities\Story.cs" />
     <Compile Include="Entities\Task.cs" />
