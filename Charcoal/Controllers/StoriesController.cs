@@ -54,7 +54,7 @@ namespace Charcoal.Controllers
             {
                 return "success";
             }
-            return "failed";
+            return "Could not delete the story";
         }
 
         [HttpPost]
