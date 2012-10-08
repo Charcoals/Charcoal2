@@ -1,0 +1,79 @@
+﻿@model Charcoal.Models.TaskViewModel
+<div class="modal-form" id="createTaskModal-@Model.StoryId">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            ×</button>
+        <h3 id="myModalLabel">
+            Create Task</h3>
+    </div>
+    <div class="modal-body container-fluid">
+        <div class="alert-danger">
+            <strong data-bind="text: descriptionError"></strong>
+        </div>
+        <div class="control-group">
+            <div class="control-label">
+                @Html.LabelFor(model => model.Assignees)
+            </div>
+            <div class="controls" id="assignees">
+                <input data-bind="value: assignees" />
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label">
+                @Html.LabelFor(model => model.Description)
+            </div>
+            <div class="controls">
+                <textarea data-bind="value: description" type="text"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">
+            Close</button>
+        <button type="submit" class="btn btn-primary" value="Save" data-bind="click: createTask">
+            Create</button>
+    </div>
+</div>
+<script type="text/javascript">
+
+    function isNullOrEmpty(str) {
+        return (!str || /^\s*$/ .test(str));
+    }
+    function TaskModel() {
+        
+        this.assignees = ko.observable("");
+        this.description = ko.observable("");
+
+        this.descriptionError = ko.computed(function() {
+            var str = this.description();
+            if(isNullOrEmpty(str)) {
+                return "no description specified";
+            } else {
+                return "";
+            }
+        }, this);
+        this.createTask = function () {
+            if(isNullOrEmpty(this.description())) {
+                alert("you are yet to specify a description");
+            }
+            else {
+                $.ajax({
+                    url: "/Stories/CreateTask",
+                    type: "POST",
+                    data: 'storyId=@Model.StoryId' + '&description=' + this.description() + '&assignees=' + this.assignees(),
+                    success: function (data) {
+                        //alert(data);
+                        
+                        $("#storytasks-@Model.StoryId").append($(data));
+                        $('#newTask-@Model.StoryId').modal('hide');
+                    },
+                    error: function (xhr, textStatus, error) {
+                        alert('ajax:failure', [xhr, status, error]);
+                    }
+                });
+            }
+        };
+    };
+
+    ko.applyBindings(new TaskModel(), document.getElementById("createTaskModal-@Model.StoryId"));
+</script>

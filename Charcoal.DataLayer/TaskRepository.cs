@@ -52,11 +52,14 @@ namespace Charcoal.DataLayer
             try
             {
                 var database = Database.OpenConnection(m_connectionString);
-                if (database.Tasks.FindById(entity.Id) == null)
+                var found = database.Tasks.FindById(entity.Id);
+                if (found == null)
                 {
                     return new DatabaseOperationResponse(false, "Item Does not exist", FailReason.ItemNoLongerExists);
                 }
                 entity.LastEditedOn = DateTime.UtcNow;
+                entity.CreatedOn = found.CreatedOn;
+                entity.StoryId = found.StoryId;
 
                 var inserted = database.Tasks.Update(entity);
                 return new DatabaseOperationResponse(inserted == 1);

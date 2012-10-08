@@ -10,15 +10,15 @@ namespace Charcoal.Core
     {
         private readonly string m_apiKey;
         private readonly IUserRepository m_userRepo;
-        private long m_userId=-1;
+        private long m_userId = -1;
         private readonly ITaskRepository m_taskRepository;
         private readonly IStoryRepository m_storyRepository;
 
 
-        public CharcoalStoryProvider(string apiKey,IStoryRepository storyRepository = null, ITaskRepository taskRepository = null,IUserRepository userRepo=null)
+        public CharcoalStoryProvider(string apiKey, IStoryRepository storyRepository = null, ITaskRepository taskRepository = null, IUserRepository userRepo = null)
         {
             m_apiKey = apiKey;
-            m_userRepo =userRepo ?? new UserRepository();
+            m_userRepo = userRepo ?? new UserRepository();
             m_taskRepository = taskRepository ?? new TaskRepository();
             m_storyRepository = storyRepository ?? new StoryRepository();
         }
@@ -27,9 +27,9 @@ namespace Charcoal.Core
         {
             get
             {
-                if(m_userId==-1)
+                if (m_userId == -1)
                 {
-                    m_userId = (long) m_userRepo.FindByAPIKey(m_apiKey).Id;
+                    m_userId = (long)m_userRepo.FindByAPIKey(m_apiKey).Id;
                 }
                 return m_userId;
             }
@@ -43,7 +43,7 @@ namespace Charcoal.Core
             return response.HasSucceeded ? response.Object : null;
         }
 
-        public Task AddNewTask(Task task, long projectId)
+        public Task AddNewTask(Task task)
         {
             var response = m_taskRepository.Save(task);
             return response.HasSucceeded ? response.Object : null;
@@ -51,7 +51,7 @@ namespace Charcoal.Core
 
         public List<Story> GetStories(long projectId, IterationType iterationType)
         {
-            return m_storyRepository.FindAllByIterationType(projectId, (int)iterationType).ConvertAll(e=> (Story)e);
+            return m_storyRepository.FindAllByIterationType(projectId, (int)iterationType).ConvertAll(e => (Story)e);
         }
 
         public List<Story> GetAllStories(long projectId)
@@ -84,9 +84,19 @@ namespace Charcoal.Core
             return m_storyRepository.Delete(storyId).HasSucceeded;
         }
 
-        public Task GetTask(long projectId, long storyId, long taskId)
+        public Task GetTask(long taskId)
         {
             return m_taskRepository.Find(taskId);
+        }
+
+        public Task ToggleTaskStatus(long taskId)
+        {
+            var originalTask =(Task) m_taskRepository.Find(taskId);
+            originalTask.IsCompleted = !originalTask.IsCompleted;
+
+            ITaskRepository taskRepository = m_taskRepository;
+            var response = taskRepository.Update(originalTask);
+            return response.HasSucceeded ? originalTask : null;
         }
 
         public bool RemoveTask(long taskId)

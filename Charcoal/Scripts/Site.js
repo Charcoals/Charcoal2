@@ -29,25 +29,35 @@ function DeleteStory(storyId) {
     }
 }
 
-function DeleteTask(taskId) {
+function ToggleTaskStatus(taskId) {
+    $.ajax({
+        url: "/Stories/ToggleTaskStatus",
+        type: "PUT",
+        data: 'taskId=' + taskId,
+        success: function (data) {
+            $("#StoryTask-" + taskId.toString()).replaceWith(data);
+        },
+        error: function (xhr, textStatus, error) {
+            alert('ajax:failure', [xhr, status, error]);
+        }
+    });
+}
 
-    var answer = confirm("Are you sure you want to delete this task?");
-    if (answer) {
-        $.ajax({
-            url: "/Stories/DeleteTask",
-            type: "DELETE",
-            data: 'taskId=' + taskId,
-            success: function (data) {
-                if (data == "success") {
-                    $("#StoryTask-" + taskId.toString()).remove();
-                }
-                else {
-                    alert(data);
-                }
-            },
-            error: function (xhr, textStatus, error) {
-                alert('ajax:failure', [xhr, status, error]);
+function DeleteTask(taskId) {
+    $.ajax({
+        url: "/Stories/DeleteTask",
+        type: "DELETE",
+        data: 'taskId=' + taskId,
+        success: function (data) {
+            if (data == "success") {
+                $("#StoryTask-" + taskId.toString()).remove();
             }
-        });
-    }
+            else {
+                alert(data);
+            }
+        },
+        error: function (xhr, textStatus, error) {
+            alert('ajax:failure', [xhr, status, error]);
+        }
+    });
 }

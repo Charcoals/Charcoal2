@@ -53,6 +53,20 @@ namespace Charcoal.Controllers
             return "Could not delete the story";
         }
 
+        [HttpPost]
+        public string CreateTask(long storyId, string description, string assignees)
+        {
+            var createdTask =m_storyProvider.AddNewTask(new TaskViewModel(storyId, description, assignees).ToTask());
+            return RenderPartialViewToString("TaskDetails", new TaskViewModel(createdTask));
+        }
+
+        [HttpPut]
+        public string ToggleTaskStatus(long taskId)
+        {
+            var task = m_storyProvider.ToggleTaskStatus(taskId);
+            return RenderPartialViewToString("TaskDetails", new TaskViewModel(task));
+        }
+
         [HttpDelete]
         public string DeleteTask(long taskId)
         {

@@ -1,12 +1,14 @@
 ﻿@model Charcoal.Models.StoryViewModel
-
 <table class="story-table" id="storyRow-@Model.Id">
-<tr class="story-row @Model.Status">
-    <td class="story-column">@Html.Partial("StoryDetails", Model)</td>
-    <td class="task-column" id="storytasks-@Model.Id">
-        @foreach (var task in Model.Tasks) {
-            @Html.Partial("TaskDetails", task)
-        }
-    </td>
-</tr>
+    <tr class="story-row @Model.Status">
+        <td class="story-column">@Html.Partial("StoryDetails", Model)</td>
+        <td class="task-column">
+            <div id="storytasks-@Model.Id">
+                @foreach (var task in Model.Tasks)
+                {
+                    @Html.Partial("TaskDetails", task)
+                }
+            </div>
+        </td>
+    </tr>
 </table>

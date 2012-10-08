@@ -31,7 +31,7 @@ namespace Charcoal.Core.Tests
             taskRepo.Setup(repo => repo.Save(task)).Returns(new DatabaseOperationResponse(true));
 
             new CharcoalStoryProvider("stuff", Mock.Of<IStoryRepository>(), taskRepo.Object)
-                                     .AddNewTask(task, projectId);
+                                     .AddNewTask(task);
             taskRepo.Verify();
         }
 
@@ -55,7 +55,7 @@ namespace Charcoal.Core.Tests
             taskRepo.Setup(repo => repo.Find(id)).Returns(new Task());
 
             new CharcoalStoryProvider("stuff",Mock.Of<IStoryRepository>(), taskRepo.Object)
-                                     .GetTask(projectId,44,id);
+                                     .GetTask(id);
             taskRepo.Verify();
         }
 

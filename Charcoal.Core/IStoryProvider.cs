@@ -6,7 +6,7 @@ namespace Charcoal.Core
 	public interface IStoryProvider
 	{
 		Story AddNewStory(long projectId, Story toBeSaved);
-        Task AddNewTask(Task task, long projectId);
+        Task AddNewTask(Task task);
 		List<Story> GetStories(long projectId,IterationType iterationType);
 		List<Story> GetAllStories(long projectId);
         List<Story> GetAllStoriesByTag(long projectId, string tag);
@@ -14,7 +14,8 @@ namespace Charcoal.Core
 		Story StartStory(long projectId, long storyId, IterationType iterationType);
 		Story GetStory(long projectId, long storyId, IterationType iterationType);
 		bool RemoveStory(long storyId);
-		Task GetTask(long projectId, long storyId, long taskId);
+		Task GetTask(long taskId);
+        Task ToggleTaskStatus(long taskId);
 		bool RemoveTask(long taskId);
 	    OperationResponse UpdateTask(Task task, long projectId);
 		void ReorderTasks(long projectId, long storyId, List<Task> tasks);
