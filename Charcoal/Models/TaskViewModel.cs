@@ -7,6 +7,7 @@ namespace Charcoal.Models
         public string Description { get; private set; }
         public string Assignees { get; private set; }
         public long Id { get; private set; }
+        public long StoryId { get; private set; }
         public int Position { get; private set; }
         public bool IsCompleted { get; private set; }
 
@@ -17,6 +18,7 @@ namespace Charcoal.Models
             Position = task.Position;
             IsCompleted = task.IsCompleted;
             Assignees = task.Assignees;
+            StoryId = task.StoryId;
         }
 
         public string GetStyle()

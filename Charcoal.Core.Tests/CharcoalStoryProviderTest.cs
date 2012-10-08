@@ -67,7 +67,7 @@ namespace Charcoal.Core.Tests
             taskRepo.Setup(repo => repo.Delete(id)).Returns(new DatabaseOperationResponse(true));
 
             Assert.IsTrue(new CharcoalStoryProvider("stuff",Mock.Of<IStoryRepository>(), taskRepo.Object)
-                                     .RemoveTask(projectId, 44, id));
+                                     .RemoveTask(id));
             taskRepo.Verify();
         }
 

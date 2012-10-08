@@ -1,6 +1,6 @@
 ﻿@model Charcoal.Models.TaskViewModel      
 
-<div class="@Model.GetStyle()">
+<div class="@Model.GetStyle()" id="StoryTask-@Model.Id">
     <h3>Task</h3>
     <p>@Model.Description</p>
     <p><strong>@Model.Assignees</strong></p>

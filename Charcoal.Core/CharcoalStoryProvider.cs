@@ -89,7 +89,7 @@ namespace Charcoal.Core
             return m_taskRepository.Find(taskId);
         }
 
-        public bool RemoveTask(long projectId, long storyId, long taskId)
+        public bool RemoveTask(long taskId)
         {
             return m_taskRepository.Delete(taskId).HasSucceeded;
         }

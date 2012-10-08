@@ -15,7 +15,7 @@ namespace Charcoal.Core
 		Story GetStory(long projectId, long storyId, IterationType iterationType);
 		bool RemoveStory(long storyId);
 		Task GetTask(long projectId, long storyId, long taskId);
-		bool RemoveTask(long projectId, long storyId, long taskId);
+		bool RemoveTask(long taskId);
 	    OperationResponse UpdateTask(Task task, long projectId);
 		void ReorderTasks(long projectId, long storyId, List<Task> tasks);
 		void AddComment(long projectId, long storyId, string comment);

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Charcoal.Core;
 using Charcoal.Core.Entities;
@@ -55,6 +51,17 @@ namespace Charcoal.Controllers
                 return "success";
             }
             return "Could not delete the story";
+        }
+
+        [HttpDelete]
+        public string DeleteTask(long taskId)
+        {
+            bool isSucess = m_storyProvider.RemoveTask(taskId);
+            if (isSucess)
+            {
+                return "success";
+            }
+            return "Could not delete the task";
         }
 
         [HttpPost]
