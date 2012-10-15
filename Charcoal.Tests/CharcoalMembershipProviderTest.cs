@@ -1,9 +1,14 @@
-﻿using Charcoal.Core.Entities;
+﻿using System;
+using System.Collections.Generic;
+using Charcoal.Controllers;
+using Charcoal.Core.Entities;
 using Charcoal.DataLayer;
 using Charcoal.Models;
 using Moq;
 using NUnit.Framework;
 using System.Web.Security;
+using ServiceStack.Text;
+
 namespace Charcoal.Tests
 {
     [TestFixture]
@@ -79,6 +84,13 @@ namespace Charcoal.Tests
             var apiKey = new CharcoalMembershipProvider(userRepo.Object).GetPassword(user.UserName, user.Password);
             Assert.AreEqual(user.APIKey, apiKey);
             userRepo.Verify();
+        }
+
+        [Test]
+        public void TestCase()
+        {
+
+            Console.WriteLine(TypeSerializer.SerializeToString(new List<MemberViewModel>{new MemberViewModel(new User()) { Email = "aw@ll", Id = 2, UserName = "user" }}));
         }
     }
 }

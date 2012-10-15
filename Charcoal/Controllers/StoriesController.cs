@@ -45,12 +45,7 @@ namespace Charcoal.Controllers
         [HttpDelete]
         public string DeleteStory(long storyId)
         {
-            bool isSucess = m_storyProvider.RemoveStory(storyId);
-            if (isSucess)
-            {
-                return "success";
-            }
-            return "Could not delete the story";
+            return m_storyProvider.RemoveStory(storyId) ? "success" : "Could not delete the story";
         }
 
         [HttpPost]

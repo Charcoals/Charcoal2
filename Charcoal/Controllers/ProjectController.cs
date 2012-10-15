@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using Charcoal.Core;
 using System.Linq;
+using Charcoal.Core.Entities;
 using Charcoal.Models;
 
 namespace Charcoal.Controllers
