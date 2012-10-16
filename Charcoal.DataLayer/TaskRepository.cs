@@ -5,11 +5,6 @@ using Simple.Data;
 
 namespace Charcoal.DataLayer
 {
-    public interface ITaskRepository : IRepository
-    {
-        
-    }
-
     public class TaskRepository : ITaskRepository
     {
 

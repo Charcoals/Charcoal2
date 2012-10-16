@@ -38,9 +38,25 @@ namespace Charcoal.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(ProjectEditModel model)
+        public string AddUserToProject(long projectId, long userId)
         {
-            return View();
+            bool isSucess = m_projectProvider.AssociateUserToProject(projectId, userId).HasSucceeded;
+            if (isSucess)
+            {
+                return "success";
+            }
+            return "Could not delete the task";
+        }
+
+        [HttpPost]
+        public string RemoveUserFromProject(long projectId, long userId)
+        {
+            bool isSucess = m_projectProvider.DisassociateUserToProject(projectId, userId).HasSucceeded;
+            if (isSucess)
+            {
+                return "success";
+            }
+            return "Could not delete the task";
         }
 
         public ActionResult Create()

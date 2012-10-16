@@ -29,12 +29,4 @@ namespace Charcoal.Core.Entities
             Tag = "";
         }
     }
-
-    public enum StoryType { Feature=0, Bug, Chore, Release }
-
-    public enum StoryStatus
-    {
-        UnScheduled=0, UnStarted, Started, Finished, Delivered, Accepted, Rejected
-    }
-    public enum IterationType { Icebox=0,Current, Backlog, Done }
 }

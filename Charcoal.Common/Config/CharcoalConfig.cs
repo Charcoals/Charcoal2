@@ -1,13 +1,7 @@
 ﻿using System.IO;
 
 namespace Charcoal.Common.Config {
-	public interface ICharcoalConfig {
-		string ProductionConnectionString { get; set; }
-		string TestConnectionString { get; set; }
-		void Parse(string filePath = "user.yaml");
-	}
-
-	public class CharcoalConfig : ICharcoalConfig {
+    public class CharcoalConfig : ICharcoalConfig {
 		
 		private static ICharcoalConfig m_config = new CharcoalConfig();
 		public static ICharcoalConfig Instance {

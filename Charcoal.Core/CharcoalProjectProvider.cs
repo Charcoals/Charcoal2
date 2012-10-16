@@ -48,5 +48,17 @@ namespace Charcoal.Core
             var response= m_projectRepository.CreateProjectAssociatedWithKey(project, m_token);
             return new OperationResponse(response.HasSucceeded, response.Description);
         }
+
+        public OperationResponse AssociateUserToProject(long projectId, long userId)
+        {
+            var response = m_projectRepository.AddUserToProject(projectId, userId);
+            return new OperationResponse(response.HasSucceeded, response.Description);
+        }
+
+        public OperationResponse DisassociateUserToProject(long projectId, long userId)
+        {
+            var response = m_projectRepository.RemoveUserFromProject(projectId, userId);
+            return new OperationResponse(response.HasSucceeded, response.Description);
+        }
     }
 }

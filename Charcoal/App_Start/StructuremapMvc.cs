@@ -1,4 +1,5 @@
 using System.Web.Mvc;
+using Charcoal.DependencyResolution;
 using StructureMap;
 
 [assembly: WebActivator.PreApplicationStartMethod(typeof(Charcoal.App_Start.StructuremapMvc), "Start")]

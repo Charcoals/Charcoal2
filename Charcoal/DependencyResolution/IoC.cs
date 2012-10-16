@@ -1,5 +1,6 @@
 using StructureMap;
-namespace Charcoal {
+
+namespace Charcoal.DependencyResolution {
     public static class IoC {
         public static IContainer Initialize() {
             ObjectFactory.Initialize(x =>

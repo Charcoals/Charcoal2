@@ -6,13 +6,6 @@ using System.Linq;
 
 namespace Charcoal.DataLayer
 {
-    public interface IProjectRepository : IRepository
-    {
-        List<dynamic> GetProjectsByUseToken(string apiToken);
-        DatabaseOperationResponse CreateProjectAssociatedWithKey(dynamic project, string apiToken);
-        DatabaseOperationResponse AddUserToProject(long projectId, string userName);
-    }
-
     public class ProjectRepository : IProjectRepository
     {
 
@@ -132,9 +125,37 @@ namespace Charcoal.DataLayer
 
         }
 
-        public DatabaseOperationResponse AddUserToProject(long projectId, string userName)
+        public DatabaseOperationResponse AddUserToProject(long projectId, long userId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var database = Database.OpenConnection(m_connectionString);
+
+                database.UsersXProjects.Insert(UserId: userId, ProjectId: projectId);
+                return new DatabaseOperationResponse(true);
+
+            }
+            catch (Exception ex)
+            {
+                return new DatabaseOperationResponse(description: ex.Message);
+            }
+        }
+
+        public DatabaseOperationResponse RemoveUserFromProject(long projectId, long userId)
+        {
+
+            try
+            {
+                var database = Database.OpenConnection(m_connectionString);
+
+                database.UsersXProjects.Delete(UserId: userId, ProjectId: projectId);
+                return new DatabaseOperationResponse(true);
+
+            }
+            catch (Exception ex)
+            {
+                return new DatabaseOperationResponse(description: ex.Message);
+            }
         }
     }
 }

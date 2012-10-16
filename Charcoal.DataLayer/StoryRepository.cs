@@ -5,13 +5,6 @@ using Simple.Data;
 
 namespace Charcoal.DataLayer
 {
-    public interface IStoryRepository:IRepository
-    {
-        List<dynamic> FindAllByIterationType(long projectId, int iterationType);
-        List<dynamic> FindAllByProjectId(long projectId);
-        dynamic UpdateStoryStatus(long storyId, int status);
-    }
-
     public class StoryRepository : IStoryRepository
     {
         private readonly string m_connectionString;

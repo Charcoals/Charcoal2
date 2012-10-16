@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="Config\CharcoalConfig.cs" />
     <Compile Include="Config\ConfigReader.cs" />
+    <Compile Include="Config\ICharcoalConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

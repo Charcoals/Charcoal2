@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -52,6 +51,4 @@ namespace Charcoal.Controllers
             base.OnException(filterContext);
         }
     }
-    public class NotAuthenticatedException : Exception { }
-
 }

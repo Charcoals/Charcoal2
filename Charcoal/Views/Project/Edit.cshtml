@@ -58,18 +58,42 @@
 <script type="text/javascript">
 
     function ProjectViewModel() {
-        this.availableMembers = @Html.Raw(JsonConvert.SerializeObject(Model.AvailableMembers));
-        this.currentMembers = ko.observableArray(@Html.Raw(@JsonConvert.SerializeObject(Model.Members)));
+        this.availableMembers =ko.observableArray(@Html.Raw(JsonConvert.SerializeObject(Model.AvailableMembers)));
+        this.currentMembers = ko.observableArray(@Html.Raw(JsonConvert.SerializeObject(Model.Members)));
         //this.title = ko.observable(@Model.Title);
        // this.description = ko.observable(@Model.Description);
-        this.id = @Model.Id;
+     
 
         this.addMember = function(member) {
-
+        $.ajax({
+                    url: "/Project/AddUserToProject",
+                    type: "POST",
+                    data: 'projectId=' +  @Model.Id + '&userId=' + member.Id ,
+                    success: function(data) {
+                        //alert(data);
+                        this.availableMembers().push(member);
+                        this.currentMembers().remove(member);
+                    },
+                    error: function(xhr, textStatus, error) {
+                        alert('ajax:failure', [xhr, status, error]);
+                    }
+                });
         };
         
         this.removeMember = function(member) {
-
+         $.ajax({
+                    url: "/Project/RemoveUserFromProject",
+                    type: "POST",
+                    data: 'projectId=' +  @Model.Id + '&userId=' + member.Id ,
+                    success: function(data) {
+                        //alert(data);
+                        this.availableMembers().remove(member);
+                        this.currentMembers().push(member);
+                    },
+                    error: function(xhr, textStatus, error) {
+                        alert('ajax:failure', [xhr, status, error]);
+                    }
+                });
         };
         
     }
