@@ -1,1 +1,5 @@
 Dont forget your user.yaml file
+example:
+
+testconnection:  Data Source=Stuff;Initial Catalog=CharcoalTest;Integrated Security=True
+prodconnection:	Data Source=Stuff;Initial Catalog=CharcoalDev;Integrated Security=True
