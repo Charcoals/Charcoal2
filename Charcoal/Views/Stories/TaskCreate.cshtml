@@ -58,7 +58,7 @@
             }
             else {
                 $.ajax({
-                    url: "/Stories/CreateTask",
+                    url:'@Url.Action("CreateTask","Stories")',
                     type: "POST",
                     data: 'storyId=@Model.StoryId' + '&description=' + this.description() + '&assignees=' + this.assignees(),
                     success: function (data) {

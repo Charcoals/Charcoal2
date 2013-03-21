@@ -6,13 +6,13 @@ jQuery(function ($) {
 
 });
 
-function DeleteStory(storyId) {
+function DeleteStory(url,storyId) {
 
     var answer = confirm("Are you sure you want to delete this story?");
     if (answer) {
         $.ajax({
-            url: "/Stories/DeleteStory",
-            type: "DELETE",
+            url: url,
+            type: "POST",
             data: 'storyId=' + storyId,
             success: function (data) {
                 if (data == "success") {
@@ -29,24 +29,24 @@ function DeleteStory(storyId) {
     }
 }
 
-function ToggleTaskStatus(taskId) {
+function ToggleTaskStatus(url,taskId) {
     $.ajax({
-        url: "/Stories/ToggleTaskStatus",
-        type: "PUT",
+        url: url,
+        type: "POST",
         data: 'taskId=' + taskId,
         success: function (data) {
             $("#StoryTask-" + taskId.toString()).replaceWith(data);
         },
         error: function (xhr, textStatus, error) {
-            alert('ajax:failure', [xhr, status, error]);
+            alert(error, [xhr, status, error]);
         }
     });
 }
 
-function DeleteTask(taskId) {
+function DeleteTask(url,taskId) {
     $.ajax({
-        url: "/Stories/DeleteTask",
-        type: "DELETE",
+        url: url,
+        type: "POST",
         data: 'taskId=' + taskId,
         success: function (data) {
             if (data == "success") {
@@ -57,7 +57,7 @@ function DeleteTask(taskId) {
             }
         },
         error: function (xhr, textStatus, error) {
-            alert('ajax:failure', [xhr, status, error]);
+            alert(error, [xhr, status, error]);
         }
     });
 }

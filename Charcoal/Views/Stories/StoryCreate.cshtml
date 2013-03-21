@@ -114,7 +114,7 @@
             }
             else {
                 $.ajax({
-                    url: "/Stories/CreateStory",
+                    url: '@Url.Action("CreateStory","Stories")',
                     type: "POST",
                     data: 'projectId=' + this.projectId + '&title=' + this.storyTitle() + '&description=' + this.description()
                     + '&estimate=' + this.estimate() + '&iterationType=' + this.iterationType()

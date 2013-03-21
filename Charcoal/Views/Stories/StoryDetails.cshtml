@@ -11,7 +11,7 @@
             </div>
             <div class="card-buttons btn-group">
                 <a href="#storyEdit-@Model.Id" role="button" class="btn-mini icon-pencil" title="edit story" data-toggle="modal"></a>
-                <a href="#" class="btn-mini icon-trash" title="delete story" onclick="DeleteStory(@Model.Id)"></a>
+                <a href="#" class="btn-mini icon-trash" title="delete story" onclick="DeleteStory('@Url.Action("DeleteStory","Stories")',@Model.Id)"></a>
                 <a href="#newTask-@Model.Id" role="button" class="btn-mini icon-plus-sign" title="add task" data-toggle="modal"></a>
                 <a href="#" class="btn-mini icon-eye-open" title="view story comments"></a>
             </div>
